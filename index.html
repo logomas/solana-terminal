@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLANA TERMINAL</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #000;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #14F195;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            width: 90%;
+            margin: 2rem auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            background: #2d2d2d;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            min-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background: #3d3d3d;
+            margin-left: 20%;
+        }
+
+        .bot-message {
+            background: #14F195;
+            color: #000;
+            margin-right: 20%;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 1rem;
+            background: #2d2d2d;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background: #3d3d3d;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            background: #14F195;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .chat-container {
+                width: 95%;
+                margin: 1rem auto;
+            }
+            
+            .user-message, .bot-message {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">SOLANA TERMINAL</div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <div class="message bot-message">
+                Merhaba! Size nasıl yardımcı olabilirim?
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Mesajınızı yazın..." autocomplete="off">
+            <button onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Kullanıcı mesajını ekle
+                const userDiv = document.createElement('div');
+                userDiv.className = 'message user-message';
+                userDiv.textContent = message;
+                chatBox.appendChild(userDiv);
+                
+                // Burada ChatGPT API'si ile bağlantı kurulacak
+                // Şimdilik örnek bir cevap gösteriyoruz
+                setTimeout(() => {
+                    const botDiv = document.createElement('div');
+                    botDiv.className = 'message bot-message';
+                    botDiv.textContent = "Bu bir örnek cevaptır. ChatGPT API bağlantısı kurulduğunda gerçek cevaplar alınacaktır.";
+                    chatBox.appendChild(botDiv);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        // Enter tuşu ile mesaj gönderme
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
